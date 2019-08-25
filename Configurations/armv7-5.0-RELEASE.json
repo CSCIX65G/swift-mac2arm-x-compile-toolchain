@@ -1,5 +1,5 @@
 {
-	"archName": "armhf",
+	"archName": "armv7",
 	"version": "5.0",
 	"toolchainSuffix": "RELEASE",
 	"targetArch": "armv7",
