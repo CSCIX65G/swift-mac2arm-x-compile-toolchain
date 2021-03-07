@@ -1,38 +1,29 @@
-// swift-tools-version:4.1
+// swift-tools-version:5.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "echoserver",
-    products: [
-      .executable(name: "echoserver",
-                  targets: [
-                    "Service",
-                    "EchoService",
-                    "Server",
-		  ]
-      ),
-      .library(name: "Service", targets: ["Service"]),
-      .library(name: "EchoService", targets: ["EchoService", "Service"]),
+    platforms: [
+        .iOS(.v14),
+        .macOS(.v11),
+        .tvOS(.v14),
+        .watchOS(.v7)
     ],
     dependencies: [
-        .package(url: "https://github.com/CSCIX65G/smoke-framework.git", .branch("swift5")),
-	.package(url: "https://github.com/CSCIX65G/Shell.git", .branch("swift5")),
-        .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", .branch("master"))
+        .package(url: "git@github.com:apple/swift-nio.git", .upToNextMajor(from: "2.26.0"))
     ],
     targets: [
         .target(
-            name: "Server",
-            dependencies: ["Service", "EchoService", "HeliumLogger", "Shell"]),
-        .target(
-            name: "EchoService",
-            dependencies: ["Service", "SmokeOperations", "SmokeHTTP1", "SmokeOperationsHTTP1"]),
-        .target(
-            name: "Service",
-            dependencies: ["SmokeOperations", "SmokeHTTP1", "SmokeOperationsHTTP1"]),
+            name: "echoserver",
+            dependencies: [
+                .product(name: "NIO", package: "swift-nio"),
+                .product(name: "NIOConcurrencyHelpers", package: "swift-nio")
+            ]
+        ),
         .testTarget(
-            name: "ServerTests",
-            dependencies: ["Server"]),
+            name: "echoserverTests",
+            dependencies: ["echoserver"]),
     ]
 )

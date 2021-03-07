@@ -1,9 +1,9 @@
 import XCTest
 
-#if !os(macOS)
+#if !canImport(ObjectiveC)
 public func allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(SmokeAPITests.allTests),
+        testCase(echoserverTests.allTests),
     ]
 }
 #endif

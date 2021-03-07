@@ -1,7 +1,7 @@
 import XCTest
 
-import Server
+import echoserverTests
 
 var tests = [XCTestCaseEntry]()
-tests += ServerTests.allTests()
+tests += echoserverTests.allTests()
 XCTMain(tests)

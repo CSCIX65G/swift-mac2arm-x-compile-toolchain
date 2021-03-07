@@ -7,8 +7,8 @@
 # Swift5 adaptation by Van Simmons
 #
 #
-# The idea is to use Ubuntu 18.04 as a standard cross compile target for amd64 and arm64
-# (and any other 18.04-supported architecture) and then to set up
+# The idea is to use Ubuntu 20.04 as a standard cross compile target for amd64 and arm64
+# (and any other 20.04-supported architecture) and then to set up
 # docker containers on those architectures to host lldb and the shlibs required to run swift programs.
 # This will enable swift containers to run on other OSes which are docker-capable (including Windows). 
 #
@@ -198,12 +198,17 @@ INSTALLER_DIR=`cat $CONFIG | jq -jc '.installerDir' | sed s/\"//g`
 # set -xv
 # where to get stuff from
 dest=$(realpath `cat $CONFIG | jq -jc '.cachePath'`)
+echo "Destination directory = ${dest}"
 
 # output base directory names
 cross_tc_basename="${dest}/Toolchains"
+echo "Toolchain directory = ${cross_tc_basename}"
 cross_sdk_basename="${dest}/SDKs"
+echo "SDK directory = ${cross_sdk_basename}"
 cross_runtime_basename="${dest}/Runtimes"
+echo "Runtime directory = ${cross_runtime_basename}"
 cross_destination_basename="${dest}/Destinations"
+echo "Destinations directory = ${cross_destination_basename}"
 
 # URLs
 binutils_pkg_url=`cat $CONFIG | jq -jc '.binutilsSource' | sed s/\"//g`
@@ -408,10 +413,12 @@ if [ ! -L ${xc_tc_name}/usr/bin/swift-autolink-extract ]; then
 fi
 )
 
-echo "Verify SDK Links"
+echo "Verify SDK Links at ${cross_sdk_basename}/${linux_sdk_name}"
 VALID=`find ${cross_sdk_basename}/${linux_sdk_name} -type l -exec sh -c 'file -b "$1" | grep -q ^broken' sh {} \; -print | wc | awk '{print($1)}'`
 if [[ $VALID -ne 0 ]]; then
     echo "    Invalid links in SDK: $VALID, exiting"
+    echo "    Packages resolving the following links must be added to the configuration:"
+    echo `find /private/tmp/SDKs/arm64-5.3.3-RELEASE.sdk -type l -exec sh -c 'file -b "$1" | grep -q ^broken' sh {} \; -print`
     exit 77
 fi
 echo "    SDK is valid"
