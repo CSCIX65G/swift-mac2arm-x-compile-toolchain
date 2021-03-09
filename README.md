@@ -9,7 +9,7 @@ This version extends the previous work by:
 
 **_(Support for armv7 and armv6 platforms has been dropped due to being unable to compile the Swift toolchain for those platforms)_**
 
-IMO, the point 2 above is the most important. This makes is possible to deploy "distro-less" docker containers of your swift applications which are extremely small. I am currently working on several R/Pi servers as examples which use this technique.
+IMO, point 2 above is the most important. This makes is possible to deploy "distro-less" docker containers of your swift applications which are extremely small. I am currently working on several R/Pi servers as examples which use this technique.
 
 ## Easy way to get started:
 

@@ -470,7 +470,7 @@
 				<key>FOLLOW_SYMBOLIC_LINKS</key>
 				<false/>
 				<key>IDENTIFIER</key>
-				<string>com.computecycles.pkg.SwiftCrossCompiler-amd64</string>
+				<string>com.computecycles.pkg.SwiftCrossCompiler-arm64</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
