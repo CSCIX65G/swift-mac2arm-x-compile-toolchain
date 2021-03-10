@@ -418,7 +418,8 @@ VALID=`find ${cross_sdk_basename}/${linux_sdk_name} -type l -exec sh -c 'file -b
 if [[ $VALID -ne 0 ]]; then
     echo "    Invalid links in SDK: $VALID, exiting"
     echo "    Packages resolving the following links must be added to the configuration:"
-    echo `find /private/tmp/SDKs/arm64-5.3.3-RELEASE.sdk -type l -exec sh -c 'file -b "$1" | grep -q ^broken' sh {} \; -print`
+    MISSING_LIST=`find ${cross_sdk_basename}/${linux_sdk_name} -type l -exec sh -c 'file -b "$1" | grep -q ^broken' sh {} \; -print`
+    echo "$MISSING_LIST"
     exit 77
 fi
 echo "    SDK is valid"
