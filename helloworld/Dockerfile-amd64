@@ -1,0 +1,11 @@
+FROM scratch
+MAINTAINER Van Simmons <van.simmons@computecycles.com>
+
+VOLUME ["/lib", "/usr/lib"]
+
+COPY ./.build/x86_64-unknown-linux/debug/helloworld ./helloworld
+
+ENV LD_LIBRARY_PATH=/usr/lib/swift/linux:/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu
+ENTRYPOINT ["/lib/x86_64-linux-gnu/ld-2.31.so"]
+CMD ["./helloworld"]
+
